@@ -11,7 +11,7 @@ if not exist "godot-cpp\SConstruct" (
 )
 
 :: Сборка release
-scons platform=windows target=template_release use_mingw=yes -j%NUMBER_OF_PROCESSORS% compiledb=yes
+scons platform=windows target=template_release compiler=clang-cl -j%NUMBER_OF_PROCESSORS% compiledb=yes
 
 if %ERRORLEVEL% NEQ 0 (
     echo.

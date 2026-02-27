@@ -11,7 +11,7 @@ if not exist "godot-cpp\SConstruct" (
 )
 
 :: Сборка debug
-scons platform=windows target=template_debug use_mingw=yes -j%NUMBER_OF_PROCESSORS% compiledb=yes dev_build=yes
+scons platform=windows target=template_debug compiler=clang-cl -j%NUMBER_OF_PROCESSORS% compiledb=yes dev_build=yes
 
 if %ERRORLEVEL% NEQ 0 (
     echo.
