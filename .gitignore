@@ -60,6 +60,6 @@ compile_commands.json
 # Cmake
 cmake-build*
 CMakeUserPresets.json
-
+/godot-cpp/
 /bin/windows/EXTENSION-NAME.windows.template_debug.x86_64.dll
 /bin/windows/EXTENSION-NAME.windows.template_debug.x86_64.ilk
