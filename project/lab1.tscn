@@ -49,13 +49,13 @@ color = Color(0.24849337, 0.13508672, 0.1909061, 1)
 
 [node name="Label" type="Label" parent="ColorRect/VBoxContainer/HBoxContainer/HBoxContainer/ColorRect"]
 layout_mode = 0
-offset_left = 3.0
-offset_top = 2.0
-offset_right = 444.0
-offset_bottom = 103.0
-text = "4.	F(n) = 1, при n < 3;
-F(n) =  F(n - 1) + F(n - 2), если n > 2 и при этом n нечётно;
-F(n) =  ∑F(i) 1<=i<=n-1, если n > 2 и при этом n чётно.
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 459.0
+offset_bottom = 107.0
+text = "12.	F(n) = 1, при n = 1;
+F(n) = n + F(n - 1) , если n чётно;
+F(n) = F(n - 1) + 2 * F(n-2), если n > 1 и при этом n нечётно.
 "
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
@@ -69,15 +69,15 @@ custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
 color = Color(0.24849337, 0.13508672, 0.1909061, 1)
 
-[node name="Label" type="Label" parent="ColorRect/VBoxContainer/HBoxContainer2/ColorRect"]
+[node name="Label2" type="Label" parent="ColorRect/VBoxContainer/HBoxContainer2/ColorRect"]
 layout_mode = 0
 offset_left = 6.0
-offset_top = 1.0
+offset_top = 5.0
 offset_right = 447.0
-offset_bottom = 102.0
-text = "12.	F(n) = 1, при n = 1;
-F(n) = n + F(n - 1) , если n чётно;
-F(n) = F(n - 1) + 2 * F(n-2), если n > 1 и при этом n нечётно.
+offset_bottom = 106.0
+text = "4.	F(n) = 1, при n < 3;
+F(n) =  F(n - 1) + F(n - 2), если n > 2 и при этом n нечётно;
+F(n) =  ∑F(i) 1<=i<=n-1, если n > 2 и при этом n чётно.
 "
 
 [node name="Button" type="Button" parent="ColorRect/VBoxContainer"]

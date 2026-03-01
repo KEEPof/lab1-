@@ -31,11 +31,14 @@ func _on_button1_pressed():
 	print(lab)
 	var result : RecursionResult;
 	if(check_box_1.button_pressed == true):
-		text_output2.text = "Рекурсия 1 выбрана"
+		text_output2.text = "Рекурсия 12 выбрана"
 		result = lab.recursion1(n);
 		text_output1.text = str(result.get_value())
+		
 	if(check_box_2.button_pressed == true):
-		text_output2.text = "Рекурсия 2 выбрана"
+		text_output2.text = "Рекурсия 4 выбрана"
+		result = lab.recursion2(n);
+		text_output1.text = str(result.get_value())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -7,4 +7,5 @@
 void Lab1::_bind_methods() {
 	UtilityFunctions::print("!!! Lab1::_bind_methods CALLED !!!");
 	ClassDB::bind_method(D_METHOD("recursion1", "n"), &Lab1::recursion1);
+	ClassDB::bind_method(D_METHOD("recursion2", "n"), &Lab1::recursion2);
 }
