@@ -145,24 +145,23 @@ public:
 		if (n < 3)
 			return 1;
 
-		i64 f_n_1 = 1;
-		i64 f_n_2 = 1;
-		i64 total_sum = 2;
+		i64 f1 = 1;
+		i64 f2 = 1;
+		i64 total = 2;
 
 		for (int i = 3; i <= n; i++) {
 			i64 f_i;
 			if (i % 2 != 0) {
-				f_i = f_n_1 + f_n_2;
-				total_sum += f_i;
+				f_i = f2 + f1;
+				total += f_i;
 			} else {
-				f_i = total_sum;
-				total_sum += f_i;
+				f_i = total;
 			}
-			f_n_2 = f_n_1;
-			f_n_1 = f_i;
+			f1 = f2;
+			f2 = f_i;
 		}
 
-		return f_n_1;
+		return f2;
 	}
 
 	Ref<RecursionResult> iteration2(i32 n) {
