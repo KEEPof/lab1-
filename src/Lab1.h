@@ -59,7 +59,6 @@ public:
 		return result;
 	}
 
-
 	i64 recursion_internal2(i32 n, i32 &call_count) {
 		call_count++;
 
@@ -93,6 +92,96 @@ public:
 		result->success = true;
 		result->value = value;
 		result->calls = call_count;
+		result->error = "";
+
+		return result;
+	}
+
+	i64 iteration_internal1(i32 n) {
+		if (n == 1)
+			return 1;
+		if (n == 2)
+			return 3;
+
+		i64 prev2 = 1;
+		i64 prev1 = 3;
+
+		for (int i = 3; i <= n; i++) {
+			i64 current;
+			if (i % 2 == 0)
+				current = i + prev1;
+			else
+				current = prev1 + 2 * prev2;
+			prev2 = prev1;
+			prev1 = current;
+		}
+
+		return prev1;
+	}
+
+	Ref<RecursionResult> iteration1(i32 n) {
+		Ref<RecursionResult> result;
+		result.instantiate();
+
+		if (n <= 0) {
+			result->success = false;
+			result->value = 0;
+			result->calls = 0;
+			result->error = "n must be > 0";
+			return result;
+		}
+
+		i64 value = iteration_internal1(n);
+
+		result->success = true;
+		result->value = value;
+		result->calls = n;
+		result->error = "";
+
+		return result;
+	}
+
+	i64 iteration_internal2(i32 n) {
+		if (n < 3)
+			return 1;
+
+		i64 prev2 = 1;
+		i64 prev1 = 1;
+
+		for (int i = 3; i <= n; i++) {
+			i64 current;
+			if (i % 2 != 0)
+				current = prev1 + prev2;
+			else {
+				current = 0;
+				for (int j = 1; j < i; j++) {
+					current += prev1;
+				}
+			}
+			prev2 = prev1;
+			prev1 = current;
+		}
+
+		return prev1;
+	}
+
+	Ref<RecursionResult> iteration2(i32 n) {
+		Ref<RecursionResult> result;
+		result.instantiate();
+
+		if (n <= 0) {
+			result->success = false;
+			result->value = 0;
+			result->calls = 0;
+			result->error = "n must be > 0";
+			return result;
+		}
+
+		i64 value = iteration_internal2(n);
+
+		result->success = true;
+		result->value = value;
+		result->calls = n;
 		result->error = "";
 
 		return result;

@@ -7,6 +7,8 @@ extends Node
 @onready var text_output1 = $ColorRect/VBoxContainer/ColorRect/Label3
 @onready var text_output2 = $ColorRect/VBoxContainer/ColorRect/Label4
 
+@onready var text_output3 = $ColorRect/VBoxContainer/ColorRect2/Label3
+
 var lab = Lab1.new()
 
 # Called when the node enters the scene tree for the first time.
@@ -30,16 +32,20 @@ func _on_button1_pressed():
 	var n = int(text_input.text)
 	print(lab)
 	var result : RecursionResult;
+	var result1 : RecursionResult;
 	if(check_box_1.button_pressed == true):
 		text_output2.text = "Рекурсия 12 выбрана"
 		result = lab.recursion1(n);
 		text_output1.text = str(result.get_value())
+		result1 = lab.iteration1(n);
+		text_output3.text = str(result1.get_value());
 		
 	if(check_box_2.button_pressed == true):
 		text_output2.text = "Рекурсия 4 выбрана"
 		result = lab.recursion2(n);
 		text_output1.text = str(result.get_value())
-
+		result1 = lab.iteration2(n);
+		text_output3.text = str(result1.get_value());
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
