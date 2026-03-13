@@ -153,10 +153,10 @@ public:
 			i64 f_i;
 			if (i % 2 != 0) {
 				f_i = f2 + f1;
-				total += f_i;
 			} else {
 				f_i = total;
 			}
+			total += f_i;
 			f1 = f2;
 			f2 = f_i;
 		}
