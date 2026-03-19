@@ -7,6 +7,7 @@
 
 #include "RecursionResult.h"
 #include "godot_cpp/classes/ref_counted.hpp"
+#include "godot_cpp/classes/time.hpp"
 #include "godot_cpp/variant/dictionary.hpp"
 #include "godot_cpp/variant/string.hpp"
 #include "types.h"
@@ -59,17 +60,30 @@ public:
 		return result;
 	}
 
-	i64 recursion_internal2(i32 n, i32 &call_count) {
+	i64 recursion_internal2(i32 n, i32 &call_count,
+							 u64 stack_base, u64 &peak_memory) {
 		call_count++;
+
+
+		volatile char stack_marker;
+		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
+		u64 usage = (stack_base > current_sp)
+						? (stack_base - current_sp)
+						: (current_sp - stack_base);
+		if (usage > peak_memory)
+			peak_memory = usage;
+
 
 		if (n < 3)
 			return 1;
+
 		if (n % 2 != 0)
-			return recursion_internal2(n - 1, call_count) + recursion_internal2(n - 2, call_count);
+			return recursion_internal2(n - 1, call_count, stack_base, peak_memory)
+				 + recursion_internal2(n - 2, call_count, stack_base, peak_memory);
 
 		i64 sum = 0;
 		for (int i = 1; i <= n - 1; i++) {
-			sum += recursion_internal2(i, call_count);
+			sum += recursion_internal2(i, call_count, stack_base, peak_memory);
 		}
 		return sum;
 	}
@@ -87,12 +101,19 @@ public:
 			return result;
 		}
 
-		i64 value = recursion_internal2(n, call_count);
+		u64 end = godot::Time::get_singleton()->get_ticks_usec();
+
+		volatile char stack_marker;
+		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
+		u64 peak_mem = 0;
+
+		i64 value = recursion_internal2(n, call_count, current_sp, peak_mem);
 
 		result->success = true;
 		result->value = value;
 		result->calls = call_count;
 		result->error = "";
+		result->memory_amount = peak_mem;
 
 		return result;
 	}
