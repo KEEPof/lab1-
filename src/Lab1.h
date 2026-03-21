@@ -25,16 +25,26 @@ public:
 	Lab1() = default;
 	~Lab1() override = default;
 
-	i64 recursion_internal1(i32 n, i32 &call_count) {
+	i64 recursion_internal1(i32 n, i32 &call_count,
+							u64 stack_base, u64& peak_memory) {
 		call_count++;
+
+		volatile char stack_marker;
+		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
+		u64 usage = (stack_base > current_sp)
+						? (stack_base - current_sp)
+						: (current_sp - stack_base);
+		if (usage > peak_memory)
+			peak_memory = usage;
 
 		if (n == 1)
 			return 1;
 
 		if (n % 2 == 0)
-			return n + recursion_internal1(n - 1, call_count);
+			return n + recursion_internal1(n - 1, call_count, stack_base, peak_memory);
 
-		return recursion_internal1(n - 1, call_count) + 2 * recursion_internal1(n - 2, call_count);
+		return recursion_internal1(n - 1, call_count, stack_base, peak_memory)
+									+ 2 * recursion_internal1(n - 2, call_count, stack_base, peak_memory);
 	}
 
 	Ref<RecursionResult> recursion1(i32 n) {
@@ -50,20 +60,24 @@ public:
 			return result;
 		}
 
-		i64 value = recursion_internal1(n, call_count);
+		volatile char stack_marker;
+		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
+		u64 peak_mem = 0;
+
+		i64 value = recursion_internal1(n, call_count, current_sp, peak_mem);
 
 		result->success = true;
 		result->value = value;
 		result->calls = call_count;
 		result->error = "";
+		result->memory_amount = peak_mem;
 
 		return result;
 	}
 
-	i64 recursion_internal2(i32 n, i32 &call_count,
-							 u64 stack_base, u64 &peak_memory) {
+	i64 recursion_internal2(i32 n, i32& call_count,
+							 u64 stack_base, u64& peak_memory) {
 		call_count++;
-
 
 		volatile char stack_marker;
 		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
@@ -119,6 +133,9 @@ public:
 	}
 
 	i64 iteration_internal1(i32 n) {
+
+
+
 		if (n == 1)
 			return 1;
 		if (n == 2)
@@ -137,12 +154,16 @@ public:
 			prev1 = current;
 		}
 
+
+
 		return prev1;
 	}
 
 	Ref<RecursionResult> iteration1(i32 n) {
 		Ref<RecursionResult> result;
 		result.instantiate();
+
+
 
 		if (n <= 0) {
 			result->success = false;
@@ -158,7 +179,11 @@ public:
 		result->value = value;
 		result->calls = n;
 		result->error = "";
-
+		result->memory_amount = sizeof(i32)    // n
+		+ sizeof(i64)    // prev2
+		+ sizeof(i64)    // prev1
+		+ sizeof(int)    // i
+		+ sizeof(i64);   // current
 		return result;
 	}
 
@@ -203,6 +228,12 @@ public:
 		result->value = value;
 		result->calls = n;
 		result->error = "";
+		// Память итерации - фиксированная, только локальные переменные:
+		// f1(8) + f2(8) + total(8) + f_i(8) + i(4) + n(4) = 40 байт
+		result->memory_amount = sizeof(i64) * 3   // f1, f2, total
+							  + sizeof(i64)        // f_i
+							  + sizeof(int)        // i
+							  + sizeof(i32);       // n
 
 		return result;
 	}
