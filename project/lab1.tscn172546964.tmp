@@ -7,10 +7,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 54.0
-offset_top = -16.0
-offset_right = 54.0
-offset_bottom = -16.0
+offset_top = 11.0
+offset_bottom = 11.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7ddne")
@@ -34,7 +32,6 @@ offset_bottom = 564.0
 [node name="TextEdit" type="TextEdit" parent="ColorRect/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-text = "Введите число:"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
 layout_mode = 2
@@ -48,7 +45,7 @@ layout_mode = 2
 [node name="ColorRect" type="ColorRect" parent="ColorRect/VBoxContainer/HBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
-color = Color(0.22745098, 0.21960784, 0.22352941, 1)
+color = Color(0.24849337, 0.13508672, 0.1909061, 1)
 
 [node name="Label" type="Label" parent="ColorRect/VBoxContainer/HBoxContainer/HBoxContainer/ColorRect"]
 layout_mode = 0
@@ -70,7 +67,7 @@ layout_mode = 2
 [node name="ColorRect" type="ColorRect" parent="ColorRect/VBoxContainer/HBoxContainer2"]
 custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
-color = Color(0.22716534, 0.22151911, 0.22293389, 1)
+color = Color(0.24849337, 0.13508672, 0.1909061, 1)
 
 [node name="Label2" type="Label" parent="ColorRect/VBoxContainer/HBoxContainer2/ColorRect"]
 layout_mode = 0
@@ -89,9 +86,9 @@ layout_mode = 2
 text = "Вычислить"
 
 [node name="ColorRect" type="ColorRect" parent="ColorRect/VBoxContainer"]
-custom_minimum_size = Vector2(500, 130)
+custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
-color = Color(0.22529593, 0.3583087, 0.4188478, 1)
+color = Color(0.24849337, 0.13508672, 0.1909061, 1)
 
 [node name="Label" type="Label" parent="ColorRect/VBoxContainer/ColorRect"]
 layout_mode = 0
@@ -103,10 +100,10 @@ text = "Результат:"
 
 [node name="Label2" type="Label" parent="ColorRect/VBoxContainer/ColorRect"]
 layout_mode = 0
-offset_left = 38.0
-offset_top = 54.0
-offset_right = 136.0
-offset_bottom = 82.0
+offset_left = 41.0
+offset_top = 57.0
+offset_right = 139.0
+offset_bottom = 85.0
 text = "Формула:"
 
 [node name="Label3" type="Label" parent="ColorRect/VBoxContainer/ColorRect"]
@@ -118,39 +115,22 @@ offset_bottom = 35.0
 
 [node name="Label4" type="Label" parent="ColorRect/VBoxContainer/ColorRect"]
 layout_mode = 0
-offset_left = 123.0
-offset_top = 54.0
-offset_right = 483.0
-offset_bottom = 82.0
+offset_left = 142.0
+offset_top = 58.0
+offset_right = 502.0
+offset_bottom = 86.0
 
 [node name="memory_label" type="Label" parent="ColorRect/VBoxContainer/ColorRect"]
 layout_mode = 0
-offset_left = 38.0
-offset_top = 31.0
-offset_right = 238.0
-offset_bottom = 59.0
-text = "Память:"
-
-[node name="time_label" type="Label" parent="ColorRect/VBoxContainer/ColorRect"]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 76.0
-offset_right = 136.0
-offset_bottom = 104.0
-text = "Время:"
-
-[node name="call_count" type="Label" parent="ColorRect/VBoxContainer/ColorRect"]
-layout_mode = 0
-offset_left = 38.0
-offset_top = 97.0
-offset_right = 136.0
-offset_bottom = 125.0
-text = "Шагов:"
+offset_left = -303.0
+offset_top = -96.0
+offset_right = -103.0
+offset_bottom = -68.0
 
 [node name="ColorRect2" type="ColorRect" parent="ColorRect/VBoxContainer"]
-custom_minimum_size = Vector2(500, 130)
+custom_minimum_size = Vector2(500, 100)
 layout_mode = 2
-color = Color(0.22352941, 0.35686275, 0.41960785, 1)
+color = Color(0.24849337, 0.13508672, 0.1909061, 1)
 
 [node name="Label" type="Label" parent="ColorRect/VBoxContainer/ColorRect2"]
 layout_mode = 0
@@ -169,24 +149,7 @@ offset_bottom = 43.0
 
 [node name="Label4" type="Label" parent="ColorRect/VBoxContainer/ColorRect2"]
 layout_mode = 0
-offset_left = 35.0
+offset_left = 33.0
 offset_top = 40.0
-offset_right = 396.0
+offset_right = 394.0
 offset_bottom = 68.0
-text = "Память:"
-
-[node name="time_label_iteration" type="Label" parent="ColorRect/VBoxContainer/ColorRect2"]
-layout_mode = 0
-offset_left = 35.0
-offset_top = 65.0
-offset_right = 396.0
-offset_bottom = 93.0
-text = "Время:"
-
-[node name="call_count_iter" type="Label" parent="ColorRect/VBoxContainer/ColorRect2"]
-layout_mode = 0
-offset_left = 35.0
-offset_top = 90.0
-offset_right = 396.0
-offset_bottom = 118.0
-text = "Шагов:"

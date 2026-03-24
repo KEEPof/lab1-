@@ -18,6 +18,14 @@ class Lab1 : public RefCounted {
 	GDCLASS(Lab1, RefCounted)
 
 private:
+	static String format_duration_us(u64 us) {
+		if (us < 1000)
+			return String::num_uint64(us) + " us";
+		if (us < 1'000'000)
+			return String::num(us / 1e3, 2) + " ms";
+		return String::num(us / 1e6, 3) + " s";
+	}
+
 protected:
 	static void _bind_methods();
 
@@ -25,32 +33,31 @@ public:
 	Lab1() = default;
 	~Lab1() override = default;
 
+	// ================= РЕКУРСИЯ 1 =================
 	i64 recursion_internal1(i32 n, i32 &call_count,
-							u64 stack_base, u64& peak_memory) {
+							i32 current_depth, i32 &max_depth) {
 		call_count++;
 
-		volatile char stack_marker;
-		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
-		u64 usage = (stack_base > current_sp)
-						? (stack_base - current_sp)
-						: (current_sp - stack_base);
-		if (usage > peak_memory)
-			peak_memory = usage;
+		current_depth++;
+		if (current_depth > max_depth)
+			max_depth = current_depth;
 
 		if (n == 1)
 			return 1;
 
 		if (n % 2 == 0)
-			return n + recursion_internal1(n - 1, call_count, stack_base, peak_memory);
+			return n + recursion_internal1(n - 1, call_count, current_depth, max_depth);
 
-		return recursion_internal1(n - 1, call_count, stack_base, peak_memory)
-									+ 2 * recursion_internal1(n - 2, call_count, stack_base, peak_memory);
+		return recursion_internal1(n - 1, call_count, current_depth, max_depth)
+			 + 2 * recursion_internal1(n - 2, call_count, current_depth, max_depth);
 	}
 
 	Ref<RecursionResult> recursion1(i32 n) {
 		Ref<RecursionResult> result;
 		result.instantiate();
+
 		int call_count = 0;
+		int max_depth = 0;
 
 		if (n <= 0) {
 			result->success = false;
@@ -60,44 +67,49 @@ public:
 			return result;
 		}
 
-		volatile char stack_marker;
-		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
-		u64 peak_mem = 0;
+		u64 start = Time::get_singleton()->get_ticks_usec();
 
-		i64 value = recursion_internal1(n, call_count, current_sp, peak_mem);
+		i64 value = recursion_internal1(n, call_count, 0, max_depth);
+
+		u64 end = Time::get_singleton()->get_ticks_usec();
 
 		result->success = true;
 		result->value = value;
 		result->calls = call_count;
 		result->error = "";
-		result->memory_amount = peak_mem;
+		result->time = format_duration_us(end - start);
+
+		u64 frame_size =
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(i64);
+
+		result->memory_amount = max_depth * frame_size;
 
 		return result;
 	}
 
+	// ================= РЕКУРСИЯ 2 =================
 	i64 recursion_internal2(i32 n, i32& call_count,
-							 u64 stack_base, u64& peak_memory) {
+							 i32 current_depth, i32& max_depth) {
 		call_count++;
 
-		volatile char stack_marker;
-		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
-		u64 usage = (stack_base > current_sp)
-						? (stack_base - current_sp)
-						: (current_sp - stack_base);
-		if (usage > peak_memory)
-			peak_memory = usage;
-
+		current_depth++;
+		if (current_depth > max_depth)
+			max_depth = current_depth;
 
 		if (n < 3)
 			return 1;
 
 		if (n % 2 != 0)
-			return recursion_internal2(n - 1, call_count, stack_base, peak_memory)
-				 + recursion_internal2(n - 2, call_count, stack_base, peak_memory);
+			return recursion_internal2(n - 1, call_count, current_depth, max_depth)
+				 + recursion_internal2(n - 2, call_count, current_depth, max_depth);
 
 		i64 sum = 0;
 		for (int i = 1; i <= n - 1; i++) {
-			sum += recursion_internal2(i, call_count, stack_base, peak_memory);
+			sum += recursion_internal2(i, call_count, current_depth, max_depth);
 		}
 		return sum;
 	}
@@ -105,7 +117,9 @@ public:
 	Ref<RecursionResult> recursion2(i32 n) {
 		Ref<RecursionResult> result;
 		result.instantiate();
+
 		int call_count = 0;
+		int max_depth = 0;
 
 		if (n <= 0) {
 			result->success = false;
@@ -115,27 +129,37 @@ public:
 			return result;
 		}
 
-		u64 end = godot::Time::get_singleton()->get_ticks_usec();
+		u64 start = Time::get_singleton()->get_ticks_usec();
 
-		volatile char stack_marker;
-		u64 current_sp = reinterpret_cast<u64>(&stack_marker);
-		u64 peak_mem = 0;
+		i64 value = recursion_internal2(n, call_count, 0, max_depth);
 
-		i64 value = recursion_internal2(n, call_count, current_sp, peak_mem);
+		u64 end = Time::get_singleton()->get_ticks_usec();
 
 		result->success = true;
 		result->value = value;
 		result->calls = call_count;
 		result->error = "";
-		result->memory_amount = peak_mem;
+		result->time = format_duration_us(end - start);
+
+		u64 frame_size =
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(i64);
+
+		result->memory_amount = max_depth * frame_size;
 
 		return result;
 	}
 
+
+
+
+
+
+	// ================= ИТЕРАЦИЯ 1 =================
 	i64 iteration_internal1(i32 n) {
-
-
-
 		if (n == 1)
 			return 1;
 		if (n == 2)
@@ -154,16 +178,12 @@ public:
 			prev1 = current;
 		}
 
-
-
 		return prev1;
 	}
 
 	Ref<RecursionResult> iteration1(i32 n) {
 		Ref<RecursionResult> result;
 		result.instantiate();
-
-
 
 		if (n <= 0) {
 			result->success = false;
@@ -173,20 +193,25 @@ public:
 			return result;
 		}
 
+		u64 start = Time::get_singleton()->get_ticks_usec();
 		i64 value = iteration_internal1(n);
+		u64 end = Time::get_singleton()->get_ticks_usec();
 
 		result->success = true;
 		result->value = value;
 		result->calls = n;
 		result->error = "";
-		result->memory_amount = sizeof(i32)    // n
-		+ sizeof(i64)    // prev2
-		+ sizeof(i64)    // prev1
-		+ sizeof(int)    // i
-		+ sizeof(i64);   // current
+		result->time = format_duration_us(end - start);
+
+		result->memory_amount =
+			sizeof(i32) +
+			sizeof(i64) * 3 +
+			sizeof(int);
+
 		return result;
 	}
 
+	// ================= ИТЕРАЦИЯ 2 =================
 	i64 iteration_internal2(i32 n) {
 		if (n < 3)
 			return 1;
@@ -222,21 +247,24 @@ public:
 			return result;
 		}
 
+		u64 start = Time::get_singleton()->get_ticks_usec();
 		i64 value = iteration_internal2(n);
+		u64 end = Time::get_singleton()->get_ticks_usec();
 
 		result->success = true;
 		result->value = value;
 		result->calls = n;
 		result->error = "";
-		// Память итерации - фиксированная, только локальные переменные:
-		// f1(8) + f2(8) + total(8) + f_i(8) + i(4) + n(4) = 40 байт
-		result->memory_amount = sizeof(i64) * 3   // f1, f2, total
-							  + sizeof(i64)        // f_i
-							  + sizeof(int)        // i
-							  + sizeof(i32);       // n
+		result->time = format_duration_us(end - start);
+
+		result->memory_amount =
+			sizeof(i64) * 4 +
+			sizeof(int) +
+			sizeof(i32);
 
 		return result;
 	}
+
 };
 
 #endif //GODOT_CPP_TEMPLATE_LAB1_H
