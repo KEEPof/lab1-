@@ -83,6 +83,28 @@ F(n) =  F(n - 1) + F(n - 2), если n > 2 и при этом n нечётно;
 F(n) =  ∑F(i) 1<=i<=n-1, если n > 2 и при этом n чётно.
 "
 
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect/VBoxContainer"]
+layout_mode = 2
+
+[node name="CheckBox3" type="CheckBox" parent="ColorRect/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="ColorRect/VBoxContainer/HBoxContainer3"]
+custom_minimum_size = Vector2(500, 100)
+layout_mode = 2
+color = Color(0.22716534, 0.22151911, 0.22293389, 1)
+
+[node name="Label3" type="Label" parent="ColorRect/VBoxContainer/HBoxContainer3/ColorRect"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 5.0
+offset_right = 447.0
+offset_bottom = 106.0
+text = "3.	Вывести все цифры натурального числа N по одной,
+в обычном порядке, разделяя их пробелами.
+Только рекурсия и целочисленная арифметика.
+"
+
 [node name="Button" type="Button" parent="ColorRect/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2

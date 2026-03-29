@@ -21,6 +21,7 @@ public:
 	int calls = 0;
 	godot::String error = godot::String();
 	godot::String time = godot::String();
+	godot::String digits_output = godot::String();
 	u64 memory_amount = 0;
 
 	RecursionResult() = default;
@@ -31,6 +32,7 @@ public:
 	i32 get_calls() const { return calls; }
 	godot::String get_error() const { return error; }
 	godot::String get_time() const { return time; }
+	godot::String get_digits_output() const { return digits_output; }
 	u64 get_memory_amount() const { return memory_amount; }
 };
 

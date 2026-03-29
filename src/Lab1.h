@@ -153,10 +153,66 @@ public:
 		return result;
 	}
 
+	// ================= РЕКУРСИЯ 3 =================
+	// Вывод цифр числа по одной в обычном порядке
+	void recursion_internal3(i32 n, i32 &call_count, i32 current_depth, i32 &max_depth, String &result_str) {
+		call_count++;
 
+		current_depth++;
+		if (current_depth > max_depth)
+			max_depth = current_depth;
 
+		if (n < 10) {
+			result_str += itos(n) + " ";
+			return;
+		}
 
+		// Сначала рекурсивно выводим все цифры кроме последней
+		recursion_internal3(n / 10, call_count, current_depth, max_depth, result_str);
+		// Затем добавляем последнюю цифру
+		result_str += itos(n % 10) + " ";
+	}
 
+	Ref<RecursionResult> recursion3(i32 n) {
+		Ref<RecursionResult> result;
+		result.instantiate();
+
+		int call_count = 0;
+		int max_depth = 0;
+		String result_str = "";
+
+		if (n <= 0) {
+			result->success = false;
+			result->value = 0;
+			result->calls = 0;
+			result->error = "n must be > 0";
+			return result;
+		}
+
+		u64 start = Time::get_singleton()->get_ticks_usec();
+
+		recursion_internal3(n, call_count, 0, max_depth, result_str);
+
+		u64 end = Time::get_singleton()->get_ticks_usec();
+
+		result->success = true;
+		result->value = 0;  // Не используется, результат в error поле (как строка)
+		result->calls = call_count;
+		result->error = "";
+		result->time = format_duration_us(end - start);
+		result->digits_output = result_str.rstrip(" ");  // Убираем последний пробел
+
+		u64 frame_size =
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(i32) +
+			sizeof(String &);
+
+		result->memory_amount = max_depth * frame_size;
+
+		return result;
+	}
 
 	// ================= ИТЕРАЦИЯ 1 =================
 	i64 iteration_internal1(i32 n) {
