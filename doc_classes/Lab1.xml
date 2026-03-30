@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<class name="Lab1" inherits="RefCounted" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/godotengine/godot/master/doc/class.xsd">
+	<brief_description>
+		Класс для вычисления рекурсивных алгоритмов.
+	</brief_description>
+	<description>
+		Содержит методы для вычисления рекурсивных и итеративных алгоритмов.
+	</description>
+	<tutorials>
+	</tutorials>
+	<methods>
+		<method name="recursion1">
+			<return type="RecursionResult" />
+			<param index="0" name="n" type="int" />
+			<description>
+				Вычисляет первую рекурсивную функцию.
+			</description>
+		</method>
+		<method name="recursion2">
+			<return type="RecursionResult" />
+			<param index="0" name="n" type="int" />
+			<description>
+				Вычисляет вторую рекурсивную функцию.
+			</description>
+		</method>
+		<method name="recursion3">
+			<return type="RecursionResult" />
+			<param index="0" name="n" type="int" />
+			<description>
+				Выводит все цифры числа N по одной в обычном порядке.
+			</description>
+		</method>
+		<method name="iteration1">
+			<return type="RecursionResult" />
+			<param index="0" name="n" type="int" />
+			<description>
+				Итеративная версия первой рекурсии.
+			</description>
+		</method>
+		<method name="iteration2">
+			<return type="RecursionResult" />
+			<param index="0" name="n" type="int" />
+			<description>
+				Итеративная версия второй рекурсии.
+			</description>
+		</method>
+	</methods>
+</class>
