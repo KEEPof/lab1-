@@ -1,55 +1,45 @@
-# Сборка проекта
+# Build
 
-## Инструменты
+This repository is a clean starting point for Godot 4 GDExtension work in C++.
 
-- **SCons** - система сборки
-- **godot-cpp** - C++ библиотека для создания GDExtension
+## Requirements
 
-## Скрипты сборки
+- Godot 4.x
+- Python 3
+- SCons
+- A C++ toolchain supported by `godot-cpp`
 
-### build_debug.bat
+## First-time setup
+
+Run:
+
+```bat
+setup.bat
+```
+
+This initializes the `godot-cpp` submodule and can generate `compile_commands.json`.
+
+## Build commands
+
+Debug:
+
+```bat
+build_debug.bat
+```
+
+Release:
+
+```bat
+build_release.bat
+```
+
+You can also call SCons directly:
+
 ```bat
 scons platform=windows target=template_debug
-```
-Создаёт отладочную сборку с символами отладки.
-
-### build_release.bat
-```bat
 scons platform=windows target=template_release
 ```
-Создаёт оптимизированную релизную сборку.
 
-## Конфигурация (SConstruct)
+## Output
 
-Основные параметры:
-- `platform` - целевая платформа (windows, linux, macos)
-- `target` - тип сборки (template_debug, template_release)
-- `build_profile.json` - профиль оптимизации (опционально)
-
-## Профиль сборки (build_profile.json)
-
-Можно использовать для уменьшения времени компиляции путём отключения неиспользуемых классов.
-
-```json
-{
-    "enabled_classes": [
-        "Lab1",
-        "RecursionResult"
-    ]
-}
-```
-
-## Результат сборки
-
-После компиляции создаётся:
-- `bin/windows/EXTENSION-NAME.windows.template_debug.x86_64.dll`
-- `bin/windows/EXTENSION-NAME.windows.template_debug.x86_64.lib`
-
-DLL копируется в:
-- `project/bin/windows/EXTENSION-NAME.windows.template_debug.x86_64.dll`
-
-## Требования для компиляции
-
-- Godot 4.x headers (в godot-cpp подмодуле)
-- MSVC или другой C++ компилятор
-- Python 3.x с SCons
+The built library is placed under `bin/<platform>/` and copied into `project/bin/<platform>/`.

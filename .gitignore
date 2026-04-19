@@ -1,6 +1,23 @@
 # Godot auto generated files
 *.gen.*
 .godot/
+.qwen/
+history/
+отчёт/
+presentation.pptx
+doctest_results_*.txt
+doctest_screenshot_*.png
+create_lesson_plan.py
+create_presentation.py
+create_report.py
+create_seminar.py
+find_links.py
+fix_essay.py
+fix_essay2.py
+presentation.py
+read_docx.py
+read_essay.py
+run_doctest_screenshot.py
 
 # Ignore library files but not the gdextension file
 project/bin/*
@@ -17,6 +34,21 @@ project/bin/macos/*
 project/bin/windows/*
 !project/bin/windows/.gitkeep
 !project/bin/*.gdextension
+
+# Root build output
+bin/*
+!bin/android
+bin/android/*
+!bin/android/.gitkeep
+!bin/linux
+bin/linux/*
+!bin/linux/.gitkeep
+!bin/macos
+bin/macos/*
+!bin/macos/.gitkeep
+!bin/windows
+bin/windows/*
+!bin/windows/.gitkeep
 .sconsign*.dblite
 
 # Ignore custom.py
@@ -61,5 +93,4 @@ compile_commands.json
 cmake-build*
 CMakeUserPresets.json
 /godot-cpp/
-/bin/windows/EXTENSION-NAME.windows.template_debug.x86_64.dll
-/bin/windows/EXTENSION-NAME.windows.template_debug.x86_64.ilk
+/doctest/
